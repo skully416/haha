@@ -18,13 +18,19 @@
         .then(response => response.json())
         .then(data => {
           var currentIPv6 = data.ip;
-          if (currentIPv6 === targetIPv6) {
+          // Compare the IPv6 addresses after removing potential scope IDs
+          if (stripScopeID(currentIPv6) === stripScopeID(targetIPv6)) {
             window.location.href = targetURLMatch;
           } else {
             window.location.href = targetURLNoMatch;
           }
         })
         .catch(error => console.error('Error fetching IPv6:', error));
+    }
+    
+    // Function to strip scope ID from an IPv6 address
+    function stripScopeID(ipv6) {
+      return ipv6.split('%')[0];
     }
     
     // Call the IPv6 checking function
