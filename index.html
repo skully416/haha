@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IP-based Redirect Example</title>
+    <title>Password Redirect</title>
 </head>
 <body>
-  <p>This page will check your IP and redirect if necessary...</p>
-  
-  <script type="text/javascript">
-    // Define the target IPv6 and URLs
-    var targetIPv6 = "2600:4040:aa35:ac00:350f:b57b:e20c:aa1a";
-    var targetURLMatch = "https://skullyss.vercel.app";
-    var targetURLNoMatch = "https://rb.gy/y2mf5"; // Replace with the URL you want to redirect to if the IP doesn't match
-    
-    // Function to check if the current IP matches the target IPv6
-    function checkIPv6() {
-      fetch('https://api6.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-          var currentIPv6 = data.ip;
-          // Compare the IPv6 addresses after removing potential scope IDs
-          if (stripScopeID(currentIPv6) === stripScopeID(targetIPv6)) {
-            window.location.href = targetURLMatch;
-          } else {
-            window.location.href = targetURLNoMatch;
-          }
-        })
-        .catch(error => console.error('Error fetching IPv6:', error));
-    }
-    
-    // Function to strip scope ID from an IPv6 address
-    function stripScopeID(ipv6) {
-      return ipv6.split('%')[0];
-    }
-    
-    // Call the IPv6 checking function
-    checkIPv6();
-  </script>
+    <form id="passwordForm" action="#">
+        <label for="password">Enter the Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById("passwordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var password = document.getElementById("password").value;
+            
+            if (password === "password") {
+                window.location.href = "https://rb.gy/y2mf5";
+            } else if (password === "wordpass") {
+                window.location.href = "https://skullyss.vercel.app";
+            } else {
+                alert("Incorrect password");
+            }
+        });
+    </script>
 </body>
 </html>
